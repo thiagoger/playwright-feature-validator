@@ -29,6 +29,7 @@ Feature Checker is an automated validation framework that ensures demo environme
 - **🧭 Smart Navigation** — Declarative routing with fallbacks
 - **📸 Evidence Capture** — Screenshots with annotations
 - **✅ Validation Engine** — Check elements, data, API responses
+- **🛡️ Content Scanner** — Bilingual profanity/gaffe/PII shield for demo safety
 - **🔔 Alerting** — Slack, email, webhooks on failure
 - **📊 Reporting** — Excel/JSON reports with history
 - **⏰ Scheduling** — Run daily, hourly, or on-demand
@@ -80,15 +81,15 @@ python -m feature_checker run --product qbo --project TCO
 │  ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐     │
 │  │ Config  │ → │  Auth   │ → │Navigate │ → │Validate │     │
 │  │ (JSON)  │   │ (Login) │   │ (Route) │   │ (Check) │     │
-│  └─────────┘   └─────────┘   └─────────┘   └─────────┘     │
-│                                                     │       │
-│                              ┌──────────────────────┘       │
-│                              ▼                              │
-│                    ┌─────────────────┐                      │
-│                    │    Reporter     │                      │
-│                    │ (Screenshot +   │                      │
-│                    │  Spreadsheet)   │                      │
-│                    └────────┬────────┘                      │
+│  └─────────┘   └─────────┘   └─────────┘   └────┬────┘     │
+│                                                  │          │
+│                              ┌────────────────────┤          │
+│                              ▼                    ▼          │
+│                    ┌─────────────────┐  ┌────────────────┐  │
+│                    │    Reporter     │  │Content Scanner │  │
+│                    │ (Screenshot +   │  │ (Profanity,    │  │
+│                    │  Spreadsheet)   │  │  PII, Gaffes)  │  │
+│                    └────────┬────────┘  └────────────────┘  │
 │                             │                               │
 │                    ┌────────▼────────┐                      │
 │                    │    Alerter      │                      │
@@ -180,6 +181,7 @@ feature-checker list --product qbo
 |------|-------------|---------|
 | `auth` | Validate login works | Login → expect homepage |
 | `navigation` | Navigate and validate | Go to page → check element exists |
+| `content_scan` | Scan page for profanity/PII/gaffes | Navigate → scan text → flag violations |
 | `api` | Call API endpoint | GET /health → expect 200 |
 | `data` | Validate data exists | Query → expect count >= N |
 | `ui` | Check UI element | Find element → validate text |
@@ -218,6 +220,7 @@ tbx-feature-checker/
 │   ├── core/
 │   │   ├── checker.py      # Main check orchestrator
 │   │   ├── browser.py      # Browser management
+│   │   ├── content_scanner.py  # Profanity/PII/gaffe detection
 │   │   └── reporter.py     # Report generation
 │   ├── auth/
 │   │   ├── login.py        # Login handlers

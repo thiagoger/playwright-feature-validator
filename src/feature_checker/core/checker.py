@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .browser import BrowserManager
 from .reporter import Reporter
+from .content_scanner import ContentScanner
 from ..auth.login import LoginHandler
 from ..navigation.navigator import Navigator
 from ..utils.config import get_config, CheckConfig, ProductConfig
@@ -179,6 +180,26 @@ class FeatureChecker:
         if status_code := expect.get("status"):
             # API validation would go here
             pass
+
+        # Content scan (profanity, placeholders, gaffes)
+        if content_scan := expect.get("content_scan"):
+            scanner = ContentScanner(
+                sensitivity=content_scan.get("sensitivity", "medium"),
+                extra_patterns=content_scan.get("extra_patterns", []),
+            )
+            # Get page text content
+            page_text = page.inner_text("body")
+            violations = scanner.scan_text(page_text, f"Page: {page.url}")
+
+            if violations:
+                critical = [v for v in violations if v.severity == "CRITICAL"]
+                if critical:
+                    details = "; ".join(f"'{v.text}' @ {v.location}" for v in critical)
+                    return "FAIL", f"CRITICAL content violations: {details}"
+                high = [v for v in violations if v.severity == "HIGH"]
+                if high:
+                    details = "; ".join(f"'{v.text}' @ {v.location}" for v in high)
+                    return "PARTIAL", f"Content warnings: {details}"
 
         return "PASS", "All validations passed"
 

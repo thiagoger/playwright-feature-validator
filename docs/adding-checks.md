@@ -75,7 +75,47 @@ Validates UI elements exist.
 }
 ```
 
-### 4. API Check (Future)
+### 4. Content Scan Check
+
+Navigates to a page and scans all visible text for profanity, placeholders, PII, or nonsense data. This is the "demo safety shield" — it catches inappropriate content before prospects see it.
+
+```json
+{
+  "id": "dimensions-content-clean",
+  "name": "Dimensions Content Clean (No Profanity/Gaffes)",
+  "type": "navigation",
+  "priority": "critical",
+  "route": "/app/class",
+  "expect": {
+    "content_scan": {
+      "sensitivity": "medium"
+    }
+  }
+}
+```
+
+**Sensitivity levels:**
+- `low` — Profanity only (quick sanity check)
+- `medium` — Profanity + placeholder data (standard, recommended)
+- `high` — Profanity + placeholders + PII + nonsense (full audit)
+
+**Custom patterns:** Add extra regex patterns to flag environment-specific terms:
+
+```json
+"expect": {
+  "content_scan": {
+    "sensitivity": "medium",
+    "extra_patterns": ["\\binternal-only\\b", "\\bDO NOT SHOW\\b"]
+  }
+}
+```
+
+**Result behavior:**
+- CRITICAL violations (profanity, PII) → check returns `FAIL`
+- HIGH violations (custom patterns) → check returns `PARTIAL`
+- MEDIUM/LOW violations → logged but check still `PASS`
+
+### 5. API Check (Future)
 
 Validates API endpoints.
 
@@ -127,6 +167,18 @@ Validates API endpoints.
   "text": "Welcome"
 }
 ```
+
+### Content Scan
+
+```json
+"expect": {
+  "content_scan": {
+    "sensitivity": "medium"
+  }
+}
+```
+
+Can be combined with other expectations (e.g., `url_contains` + `content_scan`).
 
 ## Annotations
 
