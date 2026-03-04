@@ -1,13 +1,14 @@
 """Content scanner for detecting profanity, gaffes, and inappropriate data in demo environments."""
 
 import re
-from typing import Dict, List, Tuple, Optional
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Dict, List
 
 
 @dataclass
 class ContentViolation:
     """A single content violation found during scanning."""
+
     severity: str  # CRITICAL, HIGH, MEDIUM, LOW
     category: str  # profanity, placeholder, test_data, pii, nonsense, offensive
     text: str  # The offending text
@@ -20,65 +21,65 @@ class ContentViolation:
 # This is intentionally conservative — better to flag false positives than miss real issues
 PROFANITY_PATTERNS = [
     # English
-    r'\bdick(?:s|head|weed)?\b',
-    r'\bfuck(?:ing|ed|er|s)?\b',
-    r'\bshit(?:ty|s|head)?\b',
-    r'\bass(?:hole|es|wipe)?\b',
-    r'\bbitch(?:es|ing)?\b',
-    r'\bbastard(?:s)?\b',
-    r'\bdamn(?:ed|it)?\b',
-    r'\bcrap(?:py|s)?\b',
-    r'\bhell\b',  # Only as standalone (not "hello", "shell")
-    r'\bpiss(?:ed|ing|s)?\b',
-    r'\bcunt(?:s)?\b',
-    r'\bwhore(?:s)?\b',
-    r'\bslut(?:s)?\b',
-    r'\bnigger(?:s)?\b',
-    r'\bfaggot(?:s)?\b',
-    r'\bretard(?:ed|s)?\b',
+    r"\bdick(?:s|head|weed)?\b",
+    r"\bfuck(?:ing|ed|er|s)?\b",
+    r"\bshit(?:ty|s|head)?\b",
+    r"\bass(?:hole|es|wipe)?\b",
+    r"\bbitch(?:es|ing)?\b",
+    r"\bbastard(?:s)?\b",
+    r"\bdamn(?:ed|it)?\b",
+    r"\bcrap(?:py|s)?\b",
+    r"\bhell\b",  # Only as standalone (not "hello", "shell")
+    r"\bpiss(?:ed|ing|s)?\b",
+    r"\bcunt(?:s)?\b",
+    r"\bwhore(?:s)?\b",
+    r"\bslut(?:s)?\b",
+    r"\bnigger(?:s)?\b",
+    r"\bfaggot(?:s)?\b",
+    r"\bretard(?:ed|s)?\b",
     # Portuguese
-    r'\bmerda(?:s)?\b',
-    r'\bporra(?:s)?\b',
-    r'\bcaralho\b',
-    r'\bputa(?:s)?\b',
-    r'\bviado(?:s)?\b',
-    r'\bfodido(?:s|a|as)?\b',
-    r'\bfoder\b',
-    r'\bcaçete\b',
-    r'\bdesgraça(?:do|da|dos|das)?\b',
+    r"\bmerda(?:s)?\b",
+    r"\bporra(?:s)?\b",
+    r"\bcaralho\b",
+    r"\bputa(?:s)?\b",
+    r"\bviado(?:s)?\b",
+    r"\bfodido(?:s|a|as)?\b",
+    r"\bfoder\b",
+    r"\bcaçete\b",
+    r"\bdesgraça(?:do|da|dos|das)?\b",
 ]
 
 # Placeholder / test data patterns that look unprofessional
 PLACEHOLDER_PATTERNS = [
-    r'\btest\s*(?:123|456|789|data|user|account|company)\b',
-    r'\bfoo(?:bar|baz)?\b',
-    r'\bloremipsum\b',
-    r'\basdf(?:ghjkl?)?\b',
-    r'\bxxx+\b',
-    r'\bzzz+\b',
-    r'\btodo\b',
-    r'\bfixme\b',
-    r'\bhack\b',
-    r'\bplaceholder\b',
-    r'\bsample\s*data\b',
-    r'\bdummy\b',
-    r'\bblah\b',
-    r'\bn/a\b',
+    r"\btest\s*(?:123|456|789|data|user|account|company)\b",
+    r"\bfoo(?:bar|baz)?\b",
+    r"\bloremipsum\b",
+    r"\basdf(?:ghjkl?)?\b",
+    r"\bxxx+\b",
+    r"\bzzz+\b",
+    r"\btodo\b",
+    r"\bfixme\b",
+    r"\bhack\b",
+    r"\bplaceholder\b",
+    r"\bsample\s*data\b",
+    r"\bdummy\b",
+    r"\bblah\b",
+    r"\bn/a\b",
 ]
 
 # PII patterns that shouldn't be in demo data
 PII_PATTERNS = [
-    r'\b\d{3}-\d{2}-\d{4}\b',  # SSN
-    r'\b\d{3}\.\d{2}\.\d{4}\b',  # SSN with dots
-    r'\b(?:4[0-9]{12}(?:[0-9]{3})?)\b',  # Visa
-    r'\b(?:5[1-5][0-9]{14})\b',  # Mastercard
-    r'\b[A-Za-z0-9._%+-]+@(?!tbxofficial|testbox|example|test)\S+\.\S+\b',  # Real emails
+    r"\b\d{3}-\d{2}-\d{4}\b",  # SSN
+    r"\b\d{3}\.\d{2}\.\d{4}\b",  # SSN with dots
+    r"\b(?:4[0-9]{12}(?:[0-9]{3})?)\b",  # Visa
+    r"\b(?:5[1-5][0-9]{14})\b",  # Mastercard
+    r"\b[A-Za-z0-9._%+-]+@(?!tbxofficial|testbox|example|test)\S+\.\S+\b",  # Real emails
 ]
 
 # Nonsense / gibberish detection (consecutive consonants or too-random strings)
 NONSENSE_PATTERNS = [
-    r'\b[bcdfghjklmnpqrstvwxyz]{5,}\b',  # 5+ consecutive consonants
-    r'\b[A-Z]{8,}\b',  # 8+ uppercase letters (likely test data)
+    r"\b[bcdfghjklmnpqrstvwxyz]{5,}\b",  # 5+ consecutive consonants
+    r"\b[A-Z]{8,}\b",  # 8+ uppercase letters (likely test data)
 ]
 
 
@@ -177,7 +178,7 @@ class ContentScanner:
         """
         found = []
         for i, item in enumerate(items):
-            item_location = f"{location} > item {i+1}: '{item}'"
+            item_location = f"{location} > item {i + 1}: '{item}'"
             found.extend(self.scan_text(item, item_location))
         return found
 
@@ -193,7 +194,7 @@ class ContentScanner:
             List of violations found
         """
         # Extract text content from snapshot (strip refs and metadata)
-        lines = snapshot.split('\n')
+        lines = snapshot.split("\n")
         text_content = []
 
         for line in lines:
@@ -203,10 +204,10 @@ class ContentScanner:
             text_content.extend(text_matches)
 
             # Also extract bare text content
-            text_matches = re.findall(r':\s+(.+?)(?:\s+\[ref=|$)', line)
+            text_matches = re.findall(r":\s+(.+?)(?:\s+\[ref=|$)", line)
             text_content.extend(text_matches)
 
-        all_text = ' '.join(text_content)
+        all_text = " ".join(text_content)
         return self.scan_text(all_text, f"Page: {page_name}")
 
     def _category_severity(self, category: str) -> str:
@@ -260,7 +261,7 @@ class ContentScanner:
                     if v.suggestion:
                         lines.append(f"    Fix: {v.suggestion}")
 
-        return '\n'.join(lines)
+        return "\n".join(lines)
 
     def clear(self) -> None:
         """Clear all recorded violations."""

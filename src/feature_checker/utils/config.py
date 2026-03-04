@@ -1,10 +1,11 @@
 """Configuration management for Feature Checker."""
 
-import os
 import json
-from pathlib import Path
+import os
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -58,19 +59,30 @@ class Config:
 
     # Paths
     project_root: Path = field(default_factory=lambda: Path(__file__).parent.parent.parent.parent)
-    config_dir: Path = field(default_factory=lambda: Path(__file__).parent.parent.parent.parent / "config")
-    evidence_dir: Path = field(default_factory=lambda: Path(os.getenv("EVIDENCE_DIR", "./output/evidence")))
-    reports_dir: Path = field(default_factory=lambda: Path(os.getenv("REPORTS_DIR", "./output/reports")))
+    config_dir: Path = field(
+        default_factory=lambda: Path(__file__).parent.parent.parent.parent / "config"
+    )
+    evidence_dir: Path = field(
+        default_factory=lambda: Path(os.getenv("EVIDENCE_DIR", "./output/evidence"))
+    )
+    reports_dir: Path = field(
+        default_factory=lambda: Path(os.getenv("REPORTS_DIR", "./output/reports"))
+    )
 
     # Browser
-    chrome_path: str = field(default_factory=lambda: os.getenv(
-        "CHROME_PATH",
-        r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-    ))
-    chrome_debug_port: int = field(default_factory=lambda: int(os.getenv("CHROME_DEBUG_PORT", "9222")))
+    chrome_path: str = field(
+        default_factory=lambda: os.getenv(
+            "CHROME_PATH", r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+        )
+    )
+    chrome_debug_port: int = field(
+        default_factory=lambda: int(os.getenv("CHROME_DEBUG_PORT", "9222"))
+    )
 
     # Screenshot
-    screenshot_quality: int = field(default_factory=lambda: int(os.getenv("SCREENSHOT_QUALITY", "95")))
+    screenshot_quality: int = field(
+        default_factory=lambda: int(os.getenv("SCREENSHOT_QUALITY", "95"))
+    )
 
     # Alerting
     slack_webhook_url: Optional[str] = field(default_factory=lambda: os.getenv("SLACK_WEBHOOK_URL"))

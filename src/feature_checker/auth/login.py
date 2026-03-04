@@ -1,8 +1,9 @@
 """Login handler for browser-based authentication."""
 
 import time
-from typing import Optional, Dict, Any
-from playwright.sync_api import Page, BrowserContext
+from typing import Any, Dict
+
+from playwright.sync_api import Page
 
 from .totp import generate_totp, wait_for_fresh_totp
 
@@ -108,10 +109,14 @@ class LoginHandler:
         time.sleep(2)
 
         # Step 2: Password
-        password_selector = self.config.get("password_selector", "#ius-sign-in-mfa-password-collection-current-password")
+        password_selector = self.config.get(
+            "password_selector", "#ius-sign-in-mfa-password-collection-current-password"
+        )
         self.page.wait_for_selector(password_selector, timeout=10000)
         self.page.fill(password_selector, credentials["password"])
-        self.page.click(self.config.get("password_submit", "#ius-sign-in-mfa-password-collection-continue-btn"))
+        self.page.click(
+            self.config.get("password_submit", "#ius-sign-in-mfa-password-collection-continue-btn")
+        )
 
         time.sleep(2)
 

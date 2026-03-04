@@ -3,10 +3,10 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 
 from ..utils.config import get_config
 
@@ -81,7 +81,16 @@ class Reporter:
         )
 
         # Headers
-        headers = ["#", "Check ID", "Name", "Status", "Message", "Duration (ms)", "Screenshot", "Timestamp"]
+        headers = [
+            "#",
+            "Check ID",
+            "Name",
+            "Status",
+            "Message",
+            "Duration (ms)",
+            "Screenshot",
+            "Timestamp",
+        ]
         for col, header in enumerate(headers, 1):
             cell = ws.cell(row=1, column=col, value=header)
             cell.font = header_font
@@ -136,7 +145,9 @@ class Reporter:
 
         summary_data = self._calculate_summary(results)
 
-        summary_ws.cell(row=1, column=1, value="Health Check Summary").font = Font(bold=True, size=14)
+        summary_ws.cell(row=1, column=1, value="Health Check Summary").font = Font(
+            bold=True, size=14
+        )
         summary_ws.cell(row=3, column=1, value="Product:")
         summary_ws.cell(row=3, column=2, value=self.product)
         summary_ws.cell(row=4, column=1, value="Project:")
@@ -195,7 +206,7 @@ class Reporter:
         summary = self._calculate_summary(results)
 
         lines = [
-            f"# Health Check Report",
+            "# Health Check Report",
             "",
             f"**Product:** {self.product}",
             f"**Project:** {self.project}",
@@ -203,8 +214,8 @@ class Reporter:
             "",
             "## Summary",
             "",
-            f"| Metric | Value |",
-            f"|--------|-------|",
+            "| Metric | Value |",
+            "|--------|-------|",
             f"| Total Checks | {summary['total']} |",
             f"| Passed | {summary['PASS']} |",
             f"| Failed | {summary['FAIL']} |",
@@ -223,20 +234,24 @@ class Reporter:
         # Failed checks detail
         failed = [r for r in results if r.status == "FAIL"]
         if failed:
-            lines.extend([
-                "",
-                "## Failed Checks Detail",
-                "",
-            ])
+            lines.extend(
+                [
+                    "",
+                    "## Failed Checks Detail",
+                    "",
+                ]
+            )
             for r in failed:
-                lines.extend([
-                    f"### {r.name}",
-                    "",
-                    f"- **Check ID:** {r.check_id}",
-                    f"- **Message:** {r.message}",
-                    f"- **Duration:** {r.duration_ms}ms",
-                    "",
-                ])
+                lines.extend(
+                    [
+                        f"### {r.name}",
+                        "",
+                        f"- **Check ID:** {r.check_id}",
+                        f"- **Message:** {r.message}",
+                        f"- **Duration:** {r.duration_ms}ms",
+                        "",
+                    ]
+                )
 
         with open(filepath, "w") as f:
             f.write("\n".join(lines))

@@ -1,6 +1,7 @@
 """Command-line interface for Feature Checker."""
 
 import sys
+
 import click
 from rich.console import Console
 from rich.table import Table
@@ -120,7 +121,9 @@ def list(product: str):
                 check.id,
                 check.name,
                 check.type,
-                f"[{priority_style}]{check.priority}[/{priority_style}]" if priority_style else check.priority,
+                f"[{priority_style}]{check.priority}[/{priority_style}]"
+                if priority_style
+                else check.priority,
             )
 
         console.print(table)
@@ -172,6 +175,7 @@ def status():
 
     # Check Chrome
     import os
+
     chrome_exists = os.path.exists(config.chrome_path)
     table.add_row(
         "Chrome Path",

@@ -1,7 +1,8 @@
 """Navigation engine for web applications."""
 
 import time
-from typing import Dict, Any, Tuple, Optional, List
+from typing import Any, Dict, List, Optional, Tuple
+
 from playwright.sync_api import Page
 
 
@@ -102,7 +103,7 @@ class Navigator:
         # Method 2: Click path
         if clicks := feature.get("clicks"):
             if self.navigate_by_clicks(clicks):
-                return True, f"Navigated via clicks"
+                return True, "Navigated via clicks"
 
         # Method 3: Navigation config
         if nav := feature.get("navigation"):
@@ -127,12 +128,7 @@ class Navigator:
         """
         return self.goto(home_path)
 
-    def wait_for_element(
-        self,
-        selector: str,
-        timeout: int = 10000,
-        state: str = "visible"
-    ) -> bool:
+    def wait_for_element(self, selector: str, timeout: int = 10000, state: str = "visible") -> bool:
         """
         Wait for element to be in specified state.
 

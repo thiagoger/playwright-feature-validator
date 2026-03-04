@@ -35,6 +35,9 @@ Thumbs.db
 *.log
 logs/
 
+# Linter
+.ruff_cache/
+
 # Test
 .pytest_cache/
 htmlcov/

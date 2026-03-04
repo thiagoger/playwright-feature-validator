@@ -1,18 +1,18 @@
 """Main feature checker orchestrator."""
 
 import time
-from datetime import datetime
-from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-from .browser import BrowserManager
-from .reporter import Reporter
-from .content_scanner import ContentScanner
 from ..auth.login import LoginHandler
 from ..navigation.navigator import Navigator
-from ..utils.config import get_config, CheckConfig, ProductConfig
+from ..utils.config import CheckConfig, get_config
 from ..utils.screenshot import ScreenshotManager, get_element_bbox
+from .browser import BrowserManager
+from .content_scanner import ContentScanner
+from .reporter import Reporter
 
 
 @dataclass
@@ -103,10 +103,12 @@ class FeatureChecker:
         try:
             # Navigate to feature
             if check.route:
-                success, message = self.navigator.navigate_to_feature({
-                    "route": check.route,
-                    "wait_for": check.expect.get("selector"),
-                })
+                success, message = self.navigator.navigate_to_feature(
+                    {
+                        "route": check.route,
+                        "wait_for": check.expect.get("selector"),
+                    }
+                )
                 if not success:
                     return self._create_result(check, "FAIL", message, start_time)
 
@@ -117,9 +119,7 @@ class FeatureChecker:
             screenshot = None
             if check.type in ("navigation", "ui") or status != "PASS":
                 filename = self.screenshots.generate_filename(
-                    self.product.name,
-                    self.project or "default",
-                    check.name
+                    self.product.name, self.project or "default", check.name
                 )
                 screenshot_path = self.config.evidence_dir / filename
                 page.screenshot(path=str(screenshot_path), full_page=True)
@@ -134,7 +134,7 @@ class FeatureChecker:
                                 screenshot_path,
                                 bbox,
                                 check.highlight.get("type", "box"),
-                                check.name
+                                check.name,
                             )
                 screenshot = screenshot_path
 
@@ -171,13 +171,13 @@ class FeatureChecker:
 
         # Text contains
         if text := expect.get("text"):
-            if (selector := expect.get("selector")):
+            if selector := expect.get("selector"):
                 element_text = self.navigator.get_element_text(selector)
                 if not element_text or text not in element_text:
                     return "FAIL", f"Text '{text}' not found"
 
         # Status code (for API checks)
-        if status_code := expect.get("status"):
+        if expect.get("status"):
             # API validation would go here
             pass
 
@@ -209,7 +209,7 @@ class FeatureChecker:
         status: str,
         message: str,
         start_time: float,
-        screenshot: Path = None
+        screenshot: Path = None,
     ) -> CheckResult:
         """Create a CheckResult."""
         duration = int((time.time() - start_time) * 1000)
@@ -225,7 +225,9 @@ class FeatureChecker:
 
         # Log result
         status_icon = {"PASS": "✓", "FAIL": "✗", "PARTIAL": "◐", "SKIP": "○"}.get(status, "?")
-        status_color = {"PASS": "\033[92m", "FAIL": "\033[91m", "PARTIAL": "\033[93m"}.get(status, "")
+        status_color = {"PASS": "\033[92m", "FAIL": "\033[91m", "PARTIAL": "\033[93m"}.get(
+            status, ""
+        )
         print(f"    {status_color}{status_icon} {status}\033[0m - {message}")
 
         self.results.append(result)
