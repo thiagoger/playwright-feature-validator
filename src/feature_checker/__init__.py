@@ -12,8 +12,8 @@ A framework for validating that demo environments are always ready:
 __version__ = "1.0.0"
 __author__ = "TestBox TSA Team"
 
-from .core.checker import FeatureChecker
 from .core.browser import BrowserManager
+from .core.checker import FeatureChecker
 from .core.reporter import Reporter
 
 __all__ = ["FeatureChecker", "BrowserManager", "Reporter"]

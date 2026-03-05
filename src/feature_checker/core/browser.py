@@ -5,7 +5,8 @@ import socket
 import subprocess
 import time
 from typing import Optional, Tuple
-from playwright.sync_api import sync_playwright, Browser, Page, Playwright
+
+from playwright.sync_api import Browser, Page, Playwright, sync_playwright
 
 from ..utils.config import get_config
 
@@ -29,8 +30,7 @@ class BrowserManager:
 
         # Chrome profile directory
         self.user_data_dir = os.path.join(
-            os.environ.get("TEMP", "/tmp"),
-            "feature_checker_chrome_profile"
+            os.environ.get("TEMP", "/tmp"), "feature_checker_chrome_profile"
         )
 
     def is_port_open(self, port: int = None) -> bool:

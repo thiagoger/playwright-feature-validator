@@ -1,9 +1,9 @@
 """Screenshot capture and annotation utilities."""
 
-import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple
+
 from PIL import Image, ImageDraw, ImageFont
 
 from .config import get_config
@@ -36,11 +36,7 @@ class ScreenshotManager:
         self.bg_color = (0, 0, 0)  # Black
 
     def generate_filename(
-        self,
-        product: str,
-        project: str,
-        feature: str,
-        company: str = None
+        self, product: str, project: str, feature: str, company: str = None
     ) -> str:
         """
         Generate consistent filename for screenshot.
@@ -89,7 +85,7 @@ class ScreenshotManager:
         image: Image.Image,
         bbox: Tuple[int, int, int, int],
         color: Tuple[int, int, int] = None,
-        width: int = 3
+        width: int = 3,
     ) -> Image.Image:
         """
         Draw a highlight box on image.
@@ -113,7 +109,7 @@ class ScreenshotManager:
         image: Image.Image,
         target: Tuple[int, int],
         color: Tuple[int, int, int] = None,
-        size: int = 50
+        size: int = 50,
     ) -> Image.Image:
         """
         Draw an arrow pointing to target.
@@ -139,20 +135,19 @@ class ScreenshotManager:
         draw.line(points, fill=color, width=4)
 
         # Arrow head
-        draw.polygon([
-            (x - 5, y - 5),
-            (x - 15, y - 20),
-            (x - 20, y - 15),
-        ], fill=color)
+        draw.polygon(
+            [
+                (x - 5, y - 5),
+                (x - 15, y - 20),
+                (x - 20, y - 15),
+            ],
+            fill=color,
+        )
 
         return image
 
     def annotate_text(
-        self,
-        image: Image.Image,
-        text: str,
-        position: Tuple[int, int],
-        font_size: int = 20
+        self, image: Image.Image, text: str, position: Tuple[int, int], font_size: int = 20
     ) -> Image.Image:
         """
         Add text annotation to image.
@@ -179,7 +174,7 @@ class ScreenshotManager:
         padding = 5
         draw.rectangle(
             [bbox[0] - padding, bbox[1] - padding, bbox[2] + padding, bbox[3] + padding],
-            fill=self.bg_color
+            fill=self.bg_color,
         )
 
         # Draw text
@@ -192,7 +187,7 @@ class ScreenshotManager:
         filepath: Path,
         bbox: Tuple[int, int, int, int] = None,
         annotation_type: str = "box",
-        label: str = None
+        label: str = None,
     ) -> Path:
         """
         Add annotation to existing screenshot.

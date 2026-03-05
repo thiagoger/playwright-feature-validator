@@ -1,10 +1,10 @@
 """TOTP (Time-based One-Time Password) generation."""
 
-import hmac
+import base64
 import hashlib
+import hmac
 import struct
 import time
-import base64
 
 
 def generate_totp(secret: str, interval: int = 30) -> str:
