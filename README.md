@@ -77,7 +77,7 @@ cp .env.example .env
 
 # Edit .env with your credentials
 # Then run:
-python -m feature_checker run --product example --project demo
+feature-validator run --product example --project demo
 ```
 
 ## Architecture
@@ -151,22 +151,22 @@ Define checks in `config/checks/`:
 
 ```bash
 # Run all checks for a product
-feature-checker run --product example
+feature-validator run --product example
 
 # Run specific project
-feature-checker run --product example --project demo
+feature-validator run --product example --project demo
 
 # Run single check
-feature-checker run --product example --check login-works
+feature-validator run --product example --check login-works
 
 # Dry run (no screenshots, no alerts)
-feature-checker run --product example --dry-run
+feature-validator run --product example --dry-run
 
 # Generate report only
-feature-checker report --product example --format excel
+feature-validator report --product example --format excel
 
 # List available checks
-feature-checker list --product example
+feature-validator list --product example
 ```
 
 ## Check Types
@@ -200,10 +200,7 @@ ALERT_EMAIL=team@company.com
 | Document | Description |
 |----------|-------------|
 | [Getting Started](docs/getting-started.md) | Installation and first run |
-| [Configuration](docs/configuration.md) | Product and check setup |
-| [Adding Checks](docs/adding-checks.md) | How to add new checks |
-| [Architecture](docs/architecture.md) | System design |
-| [API Reference](docs/api-reference.md) | Module documentation |
+| [Adding Checks](docs/adding-checks.md) | How to write a new check |
 
 ## Project Structure
 
@@ -227,9 +224,7 @@ playwright-feature-validator/
 ├── config/
 │   ├── checks/             # Check definitions
 │   └── products/           # Product configurations
-├── docs/                   # Documentation
-├── examples/               # Usage examples
-└── tests/                  # Test suite
+└── docs/                   # Documentation
 ```
 
 ## Contributing
