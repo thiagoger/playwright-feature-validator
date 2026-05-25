@@ -1,15 +1,15 @@
-# Feature Checker
+# Playwright Feature Validator
 
 <p align="center">
-  <img src="docs/assets/logo.png" alt="Feature Checker" width="200">
+  <img src="docs/assets/logo.png" alt="Playwright Feature Validator" width="200">
 </p>
 
 <p align="center">
-  <strong>Automated health checks and feature validation for demo environments</strong>
+  <strong>It logs into your app, clicks through every feature, and tells you what broke before your customer does.</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/thiagoger/feature-checker/actions/workflows/ci.yml"><img src="https://github.com/thiagoger/feature-checker/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/thiagoger/playwright-feature-validator/actions/workflows/ci.yml"><img src="https://github.com/thiagoger/playwright-feature-validator/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/built%20with-Playwright-2EAD33.svg" alt="Playwright">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
@@ -24,22 +24,24 @@
 
 ---
 
-## Overview
+## Why this exists
 
-Feature Checker is an automated validation framework that ensures demo environments are always ready. It logs into applications, navigates to features, validates they work, captures evidence, and alerts when something breaks.
+A customer demo fails for the dumbest reasons: an API key expired overnight, a feature flag flipped, the seed data got wiped. Nobody notices until you're sharing your screen.
 
-**Problem it solves:** API keys expire, features break, data disappears — and nobody knows until a customer demo fails. Feature Checker catches these issues in minutes, not days.
+So I built a robot that does the boring check for you. It logs in (OAuth, MFA, the works), walks through every feature on a schedule, screenshots the evidence, scores each screen, and pings Slack the moment something stops working. By the time you open the demo, you already know it's green.
+
+This is the framework behind a validation engine I run across 29 features of a real product.
 
 ## Features
 
-- **🔐 Auto Login** — Handles OAuth, MFA/TOTP, session management
-- **🧭 Smart Navigation** — Declarative routing with fallbacks
-- **📸 Evidence Capture** — Screenshots with annotations
-- **✅ Validation Engine** — Check elements, data, API responses
-- **🛡️ Content Scanner** — Bilingual profanity/gaffe/PII shield for demo safety
-- **🔔 Alerting** — Slack, email, webhooks on failure
-- **📊 Reporting** — Excel/JSON reports with history
-- **⏰ Scheduling** — Run daily, hourly, or on-demand
+- **🔐 Auto Login** - Handles OAuth, MFA/TOTP, session management
+- **🧭 Smart Navigation** - Declarative routing with fallbacks
+- **📸 Evidence Capture** - Screenshots with annotations
+- **✅ Validation Engine** - Check elements, data, API responses
+- **🛡️ Content Scanner** - Bilingual profanity/gaffe/PII shield for demo safety
+- **🔔 Alerting** - Slack, email, webhooks on failure
+- **📊 Reporting** - Excel/JSON reports with history
+- **⏰ Scheduling** - Run daily, hourly, or on-demand
 
 ## Quick Start
 
@@ -53,8 +55,8 @@ Feature Checker is an automated validation framework that ensures demo environme
 
 ```bash
 # Clone the repository
-git clone https://github.com/thiagotbx123/feature-checker.git
-cd feature-checker
+git clone https://github.com/thiagoger/playwright-feature-validator.git
+cd playwright-feature-validator
 
 # Create virtual environment
 python -m venv venv
@@ -80,30 +82,15 @@ python -m feature_checker run --product example --project demo
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FEATURE CHECKER                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐     │
-│  │ Config  │ → │  Auth   │ → │Navigate │ → │Validate │     │
-│  │ (JSON)  │   │ (Login) │   │ (Route) │   │ (Check) │     │
-│  └─────────┘   └─────────┘   └─────────┘   └────┬────┘     │
-│                                                  │          │
-│                              ┌────────────────────┤          │
-│                              ▼                    ▼          │
-│                    ┌─────────────────┐  ┌────────────────┐  │
-│                    │    Reporter     │  │Content Scanner │  │
-│                    │ (Screenshot +   │  │ (Profanity,    │  │
-│                    │  Spreadsheet)   │  │  PII, Gaffes)  │  │
-│                    └────────┬────────┘  └────────────────┘  │
-│                             │                               │
-│                    ┌────────▼────────┐                      │
-│                    │    Alerter      │                      │
-│                    │ (Slack/Email)   │                      │
-│                    └─────────────────┘                      │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    Config[Config<br/>JSON] --> Auth[Auth<br/>OAuth + MFA]
+    Auth --> Nav[Navigate<br/>routing]
+    Nav --> Check[Validate<br/>checks]
+    Check --> Rep[Reporter<br/>screenshots + Excel]
+    Check --> Scan[Content Scanner<br/>profanity / PII / gaffes]
+    Rep --> Alert[Alerter<br/>Slack / email]
+    Scan --> Alert
 ```
 
 ## Configuration
@@ -221,7 +208,7 @@ ALERT_EMAIL=team@company.com
 ## Project Structure
 
 ```
-feature-checker/
+playwright-feature-validator/
 ├── src/feature_checker/
 │   ├── cli.py              # Command-line interface
 │   ├── core/
