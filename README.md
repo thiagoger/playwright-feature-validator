@@ -227,6 +227,15 @@ playwright-feature-validator/
 └── docs/                   # Documentation
 ```
 
+## Tests
+
+```bash
+pip install -e . pytest
+pytest -q
+```
+
+Covers the pure-logic core: TOTP generation (checked against the RFC 6238 reference vector) and the content scanner's profanity, placeholder, and PII detection across sensitivity levels. CI runs it on Python 3.10 to 3.12 on every push.
+
 ## Contributing
 
 1. Fork the repository
