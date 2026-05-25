@@ -9,6 +9,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/thiagoger/feature-checker/actions/workflows/ci.yml"><img src="https://github.com/thiagoger/feature-checker/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="Python">
+  <img src="https://img.shields.io/badge/built%20with-Playwright-2EAD33.svg" alt="Playwright">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+</p>
+
+<p align="center">
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#configuration">Configuration</a> •
