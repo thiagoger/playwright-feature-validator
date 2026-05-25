@@ -13,7 +13,7 @@ This guide will help you set up and run your first health checks.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/thiagotbx123/feature-checker.git
+git clone https://github.com/thiagoger/playwright-feature-validator.git
 cd feature-checker
 ```
 

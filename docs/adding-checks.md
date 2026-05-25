@@ -77,7 +77,7 @@ Validates UI elements exist.
 
 ### 4. Content Scan Check
 
-Navigates to a page and scans all visible text for profanity, placeholders, PII, or nonsense data. This is the "demo safety shield" — it catches inappropriate content before prospects see it.
+Navigates to a page and scans all visible text for profanity, placeholders, PII, or nonsense data. This is the "demo safety shield" - it catches inappropriate content before prospects see it.
 
 ```json
 {
@@ -95,9 +95,9 @@ Navigates to a page and scans all visible text for profanity, placeholders, PII,
 ```
 
 **Sensitivity levels:**
-- `low` — Profanity only (quick sanity check)
-- `medium` — Profanity + placeholder data (standard, recommended)
-- `high` — Profanity + placeholders + PII + nonsense (full audit)
+- `low` - Profanity only (quick sanity check)
+- `medium` - Profanity + placeholder data (standard, recommended)
+- `high` - Profanity + placeholders + PII + nonsense (full audit)
 
 **Custom patterns:** Add extra regex patterns to flag environment-specific terms:
 
