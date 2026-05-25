@@ -1,0 +1,104 @@
+{
+  "product": "ExampleApp",
+  "version": "1.0",
+  "checks": [
+    {
+      "id": "login-works",
+      "name": "Login Works",
+      "type": "auth",
+      "priority": "critical",
+      "expect": {
+        "url_contains": "/app/"
+      }
+    },
+    {
+      "id": "homepage-loads",
+      "name": "Homepage Loads",
+      "type": "navigation",
+      "priority": "critical",
+      "route": "/app/home",
+      "expect": {
+        "selector": "[data-testid='home']"
+      }
+    },
+    {
+      "id": "customers-exist",
+      "name": "Customers Have Data",
+      "type": "navigation",
+      "priority": "high",
+      "route": "/app/customers",
+      "expect": {
+        "selector": ".customer-row",
+        "min_count": 1
+      },
+      "highlight": {
+        "type": "box",
+        "selector": ".customer-list"
+      }
+    },
+    {
+      "id": "invoices-exist",
+      "name": "Invoices Exist",
+      "type": "navigation",
+      "priority": "high",
+      "route": "/app/invoices",
+      "expect": {
+        "selector": ".invoice-row",
+        "min_count": 1
+      }
+    },
+    {
+      "id": "reports-load",
+      "name": "Reports Load",
+      "type": "navigation",
+      "priority": "medium",
+      "route": "/app/reports",
+      "expect": {
+        "selector": ".report-list"
+      }
+    },
+    {
+      "id": "tenant-switcher-works",
+      "name": "Tenant Switcher Works",
+      "type": "ui",
+      "priority": "high",
+      "expect": {
+        "selector": "[data-testid='tenant-switcher']"
+      }
+    },
+    {
+      "id": "create-invoice",
+      "name": "Can Create Invoice",
+      "type": "navigation",
+      "priority": "medium",
+      "route": "/app/invoice/new",
+      "expect": {
+        "selector": "form"
+      }
+    },
+    {
+      "id": "customers-content-clean",
+      "name": "Customers Content Clean (No Profanity/PII)",
+      "type": "navigation",
+      "priority": "critical",
+      "route": "/app/customers",
+      "expect": {
+        "content_scan": {
+          "sensitivity": "medium"
+        }
+      }
+    },
+    {
+      "id": "products-content-clean",
+      "name": "Products Content Clean (No Profanity/PII)",
+      "type": "navigation",
+      "priority": "high",
+      "route": "/app/products",
+      "expect": {
+        "content_scan": {
+          "sensitivity": "medium"
+        }
+      }
+    }
+  ]
+}

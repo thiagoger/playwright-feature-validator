@@ -1,0 +1,27 @@
+{
+  "name": "ExampleApp",
+  "base_url": "https://app.example.com",
+  "auth": {
+    "type": "oauth_totp",
+    "login_url": "https://accounts.example.com/sign-in",
+    "email_selector": "#email",
+    "email_submit": "#email-continue",
+    "password_selector": "#password",
+    "password_submit": "#sign-in",
+    "totp_selector": "#totp-code",
+    "totp_submit": "#totp-submit",
+    "logged_in_indicators": [
+      { "type": "url_contains", "value": "/app/" }
+    ]
+  },
+  "projects": {
+    "demo": {
+      "name": "Demo Multi-Tenant",
+      "companies": ["Acme", "Globex", "Initech"]
+    },
+    "starter": {
+      "name": "Starter",
+      "companies": ["Sandbox"]
+    }
+  }
+}

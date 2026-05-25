@@ -73,7 +73,7 @@ PII_PATTERNS = [
     r"\b\d{3}\.\d{2}\.\d{4}\b",  # SSN with dots
     r"\b(?:4[0-9]{12}(?:[0-9]{3})?)\b",  # Visa
     r"\b(?:5[1-5][0-9]{14})\b",  # Mastercard
-    r"\b[A-Za-z0-9._%+-]+@(?!tbxofficial|testbox|example|test)\S+\.\S+\b",  # Real emails
+    r"\b[A-Za-z0-9._%+-]+@(?!example|test|localhost)\S+\.\S+\b",  # Real emails
 ]
 
 # Nonsense / gibberish detection (consecutive consonants or too-random strings)
@@ -87,7 +87,7 @@ class ContentScanner:
     """
     Scans page content for inappropriate, unprofessional, or problematic text.
 
-    Designed for QBO/TestBox demo environments where data quality matters
+    Designed for demo environments where data quality matters
     because prospects see it during demos.
 
     Usage:

@@ -94,7 +94,7 @@ class LoginHandler:
         return self.is_logged_in()
 
     def _login_oauth_totp(self, credentials: Dict[str, str]) -> bool:
-        """OAuth login with TOTP MFA (e.g., Intuit)."""
+        """OAuth login with TOTP MFA."""
         login_url = self.config.get("login_url")
 
         # Navigate to login

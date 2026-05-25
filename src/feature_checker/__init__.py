@@ -10,7 +10,7 @@ A framework for validating that demo environments are always ready:
 """
 
 __version__ = "1.0.0"
-__author__ = "TestBox TSA Team"
+__author__ = "Thiago Rodrigues"
 
 from .core.browser import BrowserManager
 from .core.checker import FeatureChecker

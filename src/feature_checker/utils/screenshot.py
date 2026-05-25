@@ -44,7 +44,7 @@ class ScreenshotManager:
         Format: {date}_{product}_{project}_{company}_{feature}.png
 
         Args:
-            product: Product name (e.g., QBO)
+            product: Product name (e.g., example)
             project: Project name (e.g., TCO)
             feature: Feature name
             company: Company name (optional)

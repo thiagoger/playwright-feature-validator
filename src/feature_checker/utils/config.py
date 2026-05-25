@@ -33,7 +33,7 @@ class CheckConfig:
 
 @dataclass
 class ProductConfig:
-    """Configuration for a product (e.g., QBO, People.ai)."""
+    """Configuration for a product (e.g., a SaaS web app)."""
 
     name: str
     base_url: str

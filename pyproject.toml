@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
 authors = [
-    {name = "TestBox TSA Team", email = "tsa@testbox.com"}
+    {name = "Thiago Rodrigues", email = "thiagotbx123@gmail.com"}
 ]
 keywords = ["health-check", "testing", "automation", "playwright", "demo"]
 classifiers = [
@@ -46,9 +46,9 @@ dev = [
 feature-checker = "feature_checker.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/thiagotbx123/tbx-feature-checker"
-Documentation = "https://github.com/thiagotbx123/tbx-feature-checker/docs"
-Repository = "https://github.com/thiagotbx123/tbx-feature-checker"
+Homepage = "https://github.com/thiagotbx123/feature-checker"
+Documentation = "https://github.com/thiagotbx123/feature-checker/tree/master/docs"
+Repository = "https://github.com/thiagotbx123/feature-checker"
 
 [tool.setuptools.packages.find]
 where = ["src"]

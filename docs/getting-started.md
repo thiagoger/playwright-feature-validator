@@ -13,8 +13,8 @@ This guide will help you set up and run your first health checks.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/thiagotbx123/tbx-feature-checker.git
-cd tbx-feature-checker
+git clone https://github.com/thiagotbx123/feature-checker.git
+cd feature-checker
 ```
 
 ### 2. Create Virtual Environment
@@ -67,20 +67,20 @@ This shows if everything is configured correctly.
 ### 2. List Available Checks
 
 ```bash
-python -m feature_checker list --product qbo
+python -m feature_checker list --product example
 ```
 
 ### 3. Run Health Checks
 
 ```bash
 # Run all checks
-python -m feature_checker run --product qbo
+python -m feature_checker run --product example
 
 # Run specific project
-python -m feature_checker run --product qbo --project TCO
+python -m feature_checker run --product example --project demo
 
 # Dry run (no screenshots)
-python -m feature_checker run --product qbo --dry-run
+python -m feature_checker run --product example --dry-run
 ```
 
 ## Understanding Results

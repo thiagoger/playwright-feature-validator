@@ -29,7 +29,7 @@ def cli():
 
 
 @cli.command()
-@click.option("--product", "-p", required=True, help="Product to check (e.g., qbo)")
+@click.option("--product", "-p", required=True, help="Product to check (e.g., example)")
 @click.option("--project", "-j", default=None, help="Specific project/environment")
 @click.option("--check", "-c", default=None, help="Run specific check by ID")
 @click.option("--dry-run", is_flag=True, help="Preview without taking screenshots")

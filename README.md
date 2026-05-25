@@ -46,8 +46,8 @@ Feature Checker is an automated validation framework that ensures demo environme
 
 ```bash
 # Clone the repository
-git clone https://github.com/thiagotbx123/tbx-feature-checker.git
-cd tbx-feature-checker
+git clone https://github.com/thiagotbx123/feature-checker.git
+cd feature-checker
 
 # Create virtual environment
 python -m venv venv
@@ -68,7 +68,7 @@ cp .env.example .env
 
 # Edit .env with your credentials
 # Then run:
-python -m feature_checker run --product qbo --project TCO
+python -m feature_checker run --product example --project demo
 ```
 
 ## Architecture
@@ -107,15 +107,15 @@ Define your product in `config/products/`:
 
 ```json
 {
-  "name": "QBO",
-  "base_url": "https://qbo.intuit.com",
+  "name": "ExampleApp",
+  "base_url": "https://app.example.com",
   "auth": {
     "type": "oauth_totp",
-    "login_url": "/login"
+    "login_url": "/sign-in"
   },
   "projects": {
-    "TCO": {
-      "companies": ["Apex", "Global Tread", "Traction"]
+    "demo": {
+      "companies": ["Acme", "Globex", "Initech"]
     }
   }
 }
@@ -127,7 +127,7 @@ Define checks in `config/checks/`:
 
 ```json
 {
-  "product": "QBO",
+  "product": "ExampleApp",
   "checks": [
     {
       "id": "login-works",
@@ -157,22 +157,22 @@ Define checks in `config/checks/`:
 
 ```bash
 # Run all checks for a product
-feature-checker run --product qbo
+feature-checker run --product example
 
 # Run specific project
-feature-checker run --product qbo --project TCO
+feature-checker run --product example --project demo
 
 # Run single check
-feature-checker run --product qbo --check login-works
+feature-checker run --product example --check login-works
 
 # Dry run (no screenshots, no alerts)
-feature-checker run --product qbo --dry-run
+feature-checker run --product example --dry-run
 
 # Generate report only
-feature-checker report --product qbo --format excel
+feature-checker report --product example --format excel
 
 # List available checks
-feature-checker list --product qbo
+feature-checker list --product example
 ```
 
 ## Check Types
@@ -214,7 +214,7 @@ ALERT_EMAIL=team@company.com
 ## Project Structure
 
 ```
-tbx-feature-checker/
+feature-checker/
 ├── src/feature_checker/
 │   ├── cli.py              # Command-line interface
 │   ├── core/
@@ -253,5 +253,5 @@ MIT License - see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  Built with ❤️ by TestBox TSA Team
+  Built and maintained by Thiago Rodrigues
 </p>

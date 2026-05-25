@@ -34,7 +34,7 @@ class FeatureChecker:
     Main orchestrator for running health checks.
 
     Usage:
-        checker = FeatureChecker("qbo")
+        checker = FeatureChecker("example")
         checker.login(credentials)
         results = checker.run_all_checks()
         checker.generate_report()
@@ -45,7 +45,7 @@ class FeatureChecker:
         Initialize feature checker.
 
         Args:
-            product_name: Product to check (e.g., "qbo")
+            product_name: Product to check (e.g., "example")
             project: Specific project/environment
         """
         self.config = get_config()
