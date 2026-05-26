@@ -236,5 +236,5 @@ Add visual annotations to screenshots:
 
 1. Open `config/checks/{product}.json`
 2. Add your check to the `checks` array
-3. Run `feature-checker list --product {product}` to verify
-4. Run the check: `feature-checker run --product {product} --check {id}`
+3. Run `feature-validator list --product {product}` to verify
+4. Run the check: `feature-validator run --product {product} --check {id}`

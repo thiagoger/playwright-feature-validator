@@ -18,7 +18,7 @@ class ContentViolation:
 
 
 # Profanity / offensive word list (English + Portuguese common terms)
-# This is intentionally conservative — better to flag false positives than miss real issues
+# This is intentionally conservative - better to flag false positives than miss real issues
 PROFANITY_PATTERNS = [
     # English
     r"\bdick(?:s|head|weed)?\b",
@@ -223,9 +223,9 @@ class ContentScanner:
     def _get_suggestion(self, category: str, text: str) -> str:
         """Get a fix suggestion for a violation."""
         suggestions = {
-            "profanity": f"Remove or rename '{text}' — this is visible to demo prospects",
+            "profanity": f"Remove or rename '{text}' - this is visible to demo prospects",
             "placeholder": f"Replace '{text}' with realistic business data",
-            "pii": f"Remove PII '{text[:8]}...' — use synthetic data instead",
+            "pii": f"Remove PII '{text[:8]}...' - use synthetic data instead",
             "nonsense": f"Replace '{text}' with meaningful content",
             "custom": f"Review '{text}' per custom rules",
         }
@@ -242,7 +242,7 @@ class ContentScanner:
     def get_report(self) -> str:
         """Generate a text report of all violations."""
         if not self.violations:
-            return "Content Scan: CLEAN — No violations found."
+            return "Content Scan: CLEAN - No violations found."
 
         lines = [
             f"Content Scan: {len(self.violations)} violation(s) found",
